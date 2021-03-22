@@ -24,6 +24,7 @@ security:
               csrf_token_generator: security.csrf.token_manager
             logout:
               path: app_logout
+            user_checker: App\Security\UserChecker
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
