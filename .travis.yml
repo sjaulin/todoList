@@ -24,4 +24,4 @@ script:
   - php coverage-checker.php clover.xml 30
   - ./vendor/bin/phpcs
   - vendor/bin/phpstan analyse src tests
-  - php bin/console lint:twig .\templates\
+  - php bin/console lint:twig ./templates/
