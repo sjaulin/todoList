@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\DataFixtures\UserFixtures;
 use Doctrine\ORM\EntityManagerInterface;
 
-
 class RegistrationControllerTest extends WebTestCase
 {
     use FixturesTrait;

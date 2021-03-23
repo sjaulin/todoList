@@ -19,3 +19,8 @@
 /.vscode/
 clover.xml
 ###< sjaulin ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###

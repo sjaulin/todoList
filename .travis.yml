@@ -22,7 +22,6 @@ install:
 script:
   - php ./vendor/bin/simple-phpunit --coverage-text
   - php coverage-checker.php clover.xml 30
-  - phpcs -v --standard=PSR12 --extensions=php .\public\
-  - phpcs -v --standard=PSR12 --extensions=php --ignore=./src/kernel.php .\src\
+  - ./vendor/bin/phpcs
   - vendor/bin/phpstan analyse src tests
   - php bin/console lint:twig .\templates\
