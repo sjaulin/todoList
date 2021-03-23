@@ -20,7 +20,7 @@ install:
   - php bin/console doctrine:fixtures:load -n --env=test
 
 script:
-  - php .\bin\phpunit --coverage-text
+  - php ./vendor/bin/simple-phpunit --coverage-text
   - php coverage-checker.php clover.xml 30
   - phpcs -v --standard=PSR12 --extensions=php .\public\
   - phpcs -v --standard=PSR12 --extensions=php --ignore=./src/kernel.php .\src\
