@@ -47,11 +47,12 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "liip/test-fixtures-bundle": "^1.11",
+        "phpstan/phpstan": "^0.12.82",
         "symfony/browser-kit": "^5.1",
         "symfony/css-selector": "^5.1",
         "symfony/debug-bundle": "^5.1",
         "symfony/maker-bundle": "^1.0",
-        "symfony/phpunit-bridge": "^5.1",
+        "symfony/phpunit-bridge": "^5.2",
         "symfony/stopwatch": "^5.1",
         "symfony/var-dumper": "^5.1",
         "symfony/web-profiler-bundle": "^5.1"

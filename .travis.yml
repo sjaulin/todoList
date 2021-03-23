@@ -20,5 +20,8 @@ install:
   - php bin/console doctrine:fixtures:load -n --env=test
 
 script:
-  - ./vendor/bin/simple-phpunit --coverage-text
-  - php coverage-checker.php clover.xml 70
+  - php .\bin\phpunit --coverage-text
+  - php coverage-checker.php clover.xml 30
+  - phpcs -v --standard=PSR12 --ignore=./src/kernel.php .\src\
+  - vendor/bin/phpstan analyse src tests
+  - php bin/console lint:twig .\templates\
