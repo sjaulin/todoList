@@ -15,5 +15,8 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
+###> sjaulin ###
 /cover/
 /.vscode/
+clover.xml
+###< sjaulin ###
