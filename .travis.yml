@@ -1,11 +1,17 @@
 language: php
-php:
-  - "7.3.23"
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/symfony-bridge/.phpunit
+
+warnings_are_errors: true
 
 services:
   - mysql
 
-before_script: phpenv config-add myconfig.ini
+php:
+  - "7.3.23"
 
 install:
   - composer install --prefer-dist --no-interaction
