@@ -6,7 +6,6 @@ use App\DataFixtures\InitFixtures;
 use App\Repository\UserRepository;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\Test\kernelTestCase;
 use App\DataFixtures\UserFixtures;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -43,7 +42,7 @@ class RegistrationControllerTest extends WebTestCase
         $usersCount = self::$container->get(UserRepository::class)->count([]);
         $this->assertEquals(4, $usersCount);
         $user = self::$container->get(UserRepository::class)->findOneBy([
-          'email' => 'newuser@mail.com'
+            'email' => 'newuser@mail.com'
         ]);
         $this->assertTrue(!empty($user));
     }
