@@ -6,4 +6,4 @@ before_script: phpenv config-add myconfig.ini
 
 script:
   - composer install
-  - vendor/bin/phpunit
+  - bin/phpunit
