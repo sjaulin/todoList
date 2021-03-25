@@ -4,14 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class TaskController extends AbstractController
 {
     /**
      * @Route("/tasks", name="task_list")
+     * @IsGranted("ROLE_USER")
      */
     public function listAction()
     {
@@ -25,6 +28,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/create", name="task_create")
+     * @IsGranted("ROLE_USER")
      */
     public function createAction(Request $request)
     {
@@ -34,6 +38,11 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($this->getUser()) {
+                $task->setAuthor($this->getUser());
+            }
+
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($task);
@@ -49,9 +58,15 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
+     * @IsGranted("ROLE_USER")
      */
     public function editAction(Task $task, Request $request)
     {
+
+        if (!$this->isGranted('ENTITY_EDIT', $task)) {
+            throw new AccessDeniedHttpException("Vous ne pouvez pas modifier cette tâche");
+        }
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -72,9 +87,14 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @IsGranted("ROLE_USER")
      */
     public function toggleTaskAction(Task $task)
     {
+        if (!$this->isGranted('ENTITY_EDIT', $task)) {
+            throw new AccessDeniedHttpException("Vous ne pouvez pas modifier cette tâche");
+        }
+
         $task->setIsDone(!$task->getIsDone());
         $this->getDoctrine()->getManager()->flush();
 
@@ -85,9 +105,15 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
+     * @IsGranted("ROLE_USER")
      */
     public function deleteTaskAction(Task $task)
     {
+
+        if (!$this->isGranted('ENTITY_EDIT', $task)) {
+            throw new AccessDeniedHttpException("Vous ne pouvez pas modifier cette tâche");
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
