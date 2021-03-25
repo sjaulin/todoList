@@ -18,6 +18,7 @@
 /cover/
 /.vscode/
 clover.xml
+docker-compose.env
 ###< sjaulin ###
 
 ###> squizlabs/php_codesniffer ###

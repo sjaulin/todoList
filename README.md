@@ -1,6 +1,7 @@
-ToDoList
-========
+# ToDoList
 
-Base du projet #8 : Améliorez un projet existant
+## Run Docker containers
 
-https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
+```
+docker-compose --env-file docker-compose.env up -d
+```

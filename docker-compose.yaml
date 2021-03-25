@@ -18,3 +18,24 @@ services:
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: null
       PMA_HOST: mysql
+  www:
+    build:
+      context: .
+      dockerfile: Dockerfile-www
+    ports:
+      - "8741:80"
+    volumes:
+      - ./docker-www-sites-enabled:/etc/apache2/sites-enabled
+      - ./:/var/www
+    restart: always
+
+  blackfire:
+    image: blackfire/blackfire
+    container_name: blackfire_todolist
+    ports: ["8707"]
+    environment:
+      # Exposes BLACKFIRE_* environment variables from the host
+      BLACKFIRE_SERVER_ID: $BLACKFIRE_SERVER_ID
+      BLACKFIRE_SERVER_TOKEN: $BLACKFIRE_SERVER_TOKEN
+      BLACKFIRE_CLIENT_ID: $BLACKFIRE_CLIENT_ID
+      BLACKFIRE_CLIENT_TOKEN: $BLACKFIRE_CLIENT_TOKEN
