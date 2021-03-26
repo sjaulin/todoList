@@ -15,9 +15,8 @@
 ###< symfony/phpunit-bridge ###
 
 ###> sjaulin ###
-/cover/
 /.vscode/
-clover.xml
+/phpunit-report/
 docker-compose.env
 ###< sjaulin ###
 

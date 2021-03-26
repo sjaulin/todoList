@@ -38,6 +38,13 @@ class UserFixtures extends Fixture
         $user->setUsername('user2')
             ->setPassword($this->encoder->encodePassword($user, 'password'))
             ->setEmail('user2@mail.com')
+            ->setIsVerified(true);
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('usernotverified')
+            ->setPassword($this->encoder->encodePassword($user, 'password'))
+            ->setEmail('usernotverified@mail.com')
             ->setIsVerified(false);
         $manager->persist($user);
 

@@ -15,13 +15,13 @@ class RegistrationControllerTest extends WebTestCase
 
     public function testRegistration()
     {
-        // Create User
         $client = static::createClient();
 
         $this->loadFixtures([
             UserFixtures::class
         ]);
 
+        // Create User
         $client->request('GET', '/register');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Register');
@@ -39,10 +39,20 @@ class RegistrationControllerTest extends WebTestCase
         // Find User
         self::bootkernel();
         $usersCount = self::$container->get(UserRepository::class)->count([]);
-        $this->assertEquals(4, $usersCount);
+        $this->assertEquals(5, $usersCount);
         $user = self::$container->get(UserRepository::class)->findOneBy([
             'email' => 'newuser@mail.com'
         ]);
         $this->assertTrue(!empty($user));
+
+        // Login Denied because email not verify
+        $client->request('GET', '/login');
+        $this->assertResponseIsSuccessful();
+        $client->submitForm('login', ['_username' => 'newuser', '_password' => 'password']);
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $content = $client->getResponse()->getContent();
+        $content = !empty($content) ? $content : '';
+        $this->assertStringContainsString('pas encore validé', $content);
     }
 }

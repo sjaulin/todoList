@@ -3,11 +3,11 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\InitFixtures;
+use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use App\DataFixtures\UserFixtures;
-use Doctrine\ORM\EntityManagerInterface;
 
 class SecurityControllerTest extends WebTestCase
 {

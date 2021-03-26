@@ -18,7 +18,11 @@
 							{% endif %}
 						</h4>
 						<h4>
+							{% if is_granted('ENTITY_EDIT', task) %}
 							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
+							{% else %}
+							<p>{{ task.title }}</p>
+							{% endif %}
 						</h4>
 						<p>{{ task.content }}</p>
 					</div>
