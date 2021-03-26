@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use App\Repository\TaskRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -12,6 +13,14 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class TaskController extends AbstractController
 {
+
+    private $taskRepository;
+
+    public function __construct(TaskRepository $taskRepository)
+    {
+        $this->taskRepository = $taskRepository;
+    }
+
     /**
      * @Route("/tasks", name="task_list")
      * @IsGranted("ROLE_USER")
@@ -21,7 +30,21 @@ class TaskController extends AbstractController
         return $this->render(
             'task/list.html.twig',
             [
-                'tasks' => $this->getDoctrine()->getRepository(Task::class)->findAll()
+                'tasks' => $this->taskRepository->findAll(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/tasks/done", name="task_list_done")
+     * @IsGranted("ROLE_USER")
+     */
+    public function listActionDone()
+    {
+        return $this->render(
+            'task/list.html.twig',
+            [
+                'tasks' => $this->taskRepository->findDone(),
             ]
         );
     }
