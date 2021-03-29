@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Task;
 use App\DataFixtures\InitFixtures;
 use App\DataFixtures\TaskFixtures;
 use App\DataFixtures\UserFixtures;
@@ -104,11 +105,30 @@ class TaskControllerTest extends WebTestCase
         $client->request('GET', '/logout');
         $this->assertResponseRedirects();
         $client->followRedirect();
+    }
+
+    public function testAccessDenied()
+    {
+        $client = static::createClient();
+
+        $this->loadFixtures([
+            TaskFixtures::class
+        ]);
+
+        $tasks = self::$container->get(TaskRepository::class)->findAll();
+        /**
+         * @var Task $task
+         */
+        $task = $tasks[0];
+        $author = $task->getAuthor();
+
+        // Get a different user
+        $differentUsername = $author->getUsername() == 'user1' ? 'user2' : 'user1';
 
         // Login with another User
         $client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
-        $client->submitForm('login', ['_username' => 'user2', '_password' => 'password']);
+        $client->submitForm('login', ['_username' => $differentUsername, '_password' => 'password']);
         $this->assertResponseRedirects();
         $client->followRedirect();
         $content = $client->getResponse()->getContent();
@@ -116,11 +136,51 @@ class TaskControllerTest extends WebTestCase
         $this->assertStringContainsString('Se déconnecter', $content);
 
         // Access Denied because user not author
-        $client->request('GET', '/tasks/' . $task_id . '/edit');
-        $this->assertResponseStatusCodeSame(404);
-        $client->request('GET', '/tasks/' . $task_id . '/delete');
-        $this->assertResponseStatusCodeSame(404);
-        $client->request('GET', '/tasks/' . $task_id . '/toggle');
-        $this->assertResponseStatusCodeSame(404);
+        $client->request('GET', '/tasks/' . $task->getId() . '/edit');
+        $this->assertResponseStatusCodeSame(403);
+        $client->request('GET', '/tasks/' . $task->getId() . '/delete');
+        $this->assertResponseStatusCodeSame(403);
+        $client->request('GET', '/tasks/' . $task->getId() . '/toggle');
+        $this->assertResponseStatusCodeSame(403);
+
+        // Logout
+        $client->request('GET', '/logout');
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+    }
+
+    public function testAccessAdmin()
+    {
+
+        $client = static::createClient();
+
+        $this->loadFixtures([
+            TaskFixtures::class
+        ]);
+
+        $tasks = self::$container->get(TaskRepository::class)->findAll();
+        /**
+         * @var Task $task
+         */
+        $task = $tasks[0];
+
+        // Login with Admin User
+        $client->request('GET', '/login');
+        $this->assertResponseIsSuccessful();
+        $client->submitForm('login', ['_username' => 'admin', '_password' => 'password']);
+        $this->assertResponseRedirects();
+        $client->followRedirect();
+        $content = $client->getResponse()->getContent();
+        $content = !empty($content) ? $content : '';
+        $this->assertStringContainsString('Se déconnecter', $content);
+
+        // Access because user is admin
+        $client->request('GET', '/tasks/' . $task->getId() . '/edit');
+        $this->assertResponseIsSuccessful();
+
+        // Logout
+        $client->request('GET', '/logout');
+        $this->assertResponseRedirects();
+        $client->followRedirect();
     }
 }
