@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class TaskEntityTest extends TestCase
 {
 
-    public function testEntityMethods()
+    public function testEntityMethods(): void
     {
         $user = new User();
         $user->setUsername('user1')
@@ -17,7 +17,7 @@ class TaskEntityTest extends TestCase
             ->setEmail('user1@mail.com')
             ->setIsVerified(true);
 
-        $task = new Task;
+        $task = new Task();
         $task->setTitle('title');
         $task->setContent('content');
         $task->setIsDone(true);

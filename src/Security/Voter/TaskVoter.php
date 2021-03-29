@@ -15,7 +15,7 @@ class TaskVoter extends Voter
             && $subject instanceof Task;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
     {
         /**
          * @var Task $subject
@@ -36,7 +36,6 @@ class TaskVoter extends Voter
             case 'ENTITY_EDIT':
             case 'ENTITY_DELETE':
                 return $subject->getAuthor() === $user;
-                break;
         }
 
         return false;

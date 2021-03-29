@@ -13,7 +13,7 @@ class SecurityControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
-    public function testLoginLogout()
+    public function testLoginLogout(): void
     {
         $client = static::createClient();
 

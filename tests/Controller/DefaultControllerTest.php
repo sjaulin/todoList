@@ -9,7 +9,7 @@ class DefaultControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
-    public function testIndex()
+    public function testIndex(): void
     {
         $client = static::createClient();
 

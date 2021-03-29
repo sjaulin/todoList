@@ -15,7 +15,7 @@ class UserControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
-    public function testCrudUser()
+    public function testCrudUser(): void
     {
         $client = static::createClient();
 
@@ -46,7 +46,8 @@ class UserControllerTest extends WebTestCase
         $client->followRedirect();
         // Find User
         self::bootkernel();
-        $user = self::$container->get(UserRepository::class)->findOneBy([
+        $container = self::$container;
+        $user = $container->get(UserRepository::class)->findOneBy([
             'username' => 'newuser'
         ]);
         $this->assertTrue(!empty($user));
@@ -70,14 +71,15 @@ class UserControllerTest extends WebTestCase
 
         // Find User
         self::bootkernel();
-        $user = self::$container->get(UserRepository::class)->findOneBy([
+        $container = self::$container;
+        $user = $container->get(UserRepository::class)->findOneBy([
             'id' => $user_id,
             'username' => 'newuser2'
         ]);
         $this->assertTrue(!empty($user));
     }
 
-    public function testAccessDeniedNonAdmin()
+    public function testAccessDeniedNonAdmin(): void
     {
         $client = static::createClient();
 

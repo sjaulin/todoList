@@ -12,8 +12,11 @@ use Doctrine\Persistence\ObjectManager;
 
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
-    const CREATE_NB = 25;
+    private const CREATE_NB = 25;
 
+    /**
+     * @var UserRepository
+     */
     private $userRepository;
 
     public function __construct(UserRepository $userRepository)
@@ -21,14 +24,14 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         $this->userRepository = $userRepository;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
 
         $faker = Factory::create('fr_FR');
         $users = $this->userRepository->findAllNotAdmin();
 
         for ($t = 0; $t < self::CREATE_NB; $t++) {
-            $task = new Task;
+            $task = new Task();
             $task->setTitle($faker->text(25));
             $task->setContent($faker->text(150));
             $task->setIsDone((bool)rand(0, 1));

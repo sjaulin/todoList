@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /**
+     * @var int
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -25,11 +26,13 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $username;
 
     /**
+     * @var array<string>
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -41,17 +44,20 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      * @Assert\Email
      */
     private $email;
 
     /**
+     * @var bool
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
 
     /**
+     * @var ArrayCollection<int, Task>
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="author")
      */
     private $tasks;
@@ -95,6 +101,10 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array<string> $roles
+     * @return self
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -131,7 +141,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;

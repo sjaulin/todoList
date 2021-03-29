@@ -13,8 +13,19 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class EmailVerifier
 {
+    /**
+     * @var VerifyEmailHelperInterface
+     */
     private $verifyEmailHelper;
+
+    /**
+     * @var MailerInterface
+     */
     private $mailer;
+
+    /**
+     * @var EntityManagerInterface
+     */
     private $entityManager;
 
     public function __construct(
@@ -34,7 +45,7 @@ class EmailVerifier
     ): void {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             $verifyEmailRouteName,
-            $user->getId(),
+            (string) $user->getId(),
             $user->getEmail(),
             ['id' => $user->getId()]
         );
@@ -52,9 +63,13 @@ class EmailVerifier
     /**
      * @throws VerifyEmailExceptionInterface
      */
-    public function handleEmailConfirmation(Request $request, User $user)
+    public function handleEmailConfirmation(Request $request, User $user): void
     {
-        $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+        $this->verifyEmailHelper->validateEmailConfirmation(
+            $request->getUri(),
+            (string) $user->getId(),
+            $user->getEmail()
+        );
 
         $user->setIsVerified(true);
 

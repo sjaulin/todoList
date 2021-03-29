@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
@@ -16,7 +17,7 @@ class UserController extends AbstractController
      * @Route("/users", name="user_list")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function listAction()
+    public function listAction(): Response
     {
         return $this->render('user/list.html.twig', [
             'users' => $this->getDoctrine()->getRepository(User::class)->findAll()
@@ -27,7 +28,7 @@ class UserController extends AbstractController
      * @Route("/users/create", name="user_create")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function createAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function createAction(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -55,7 +56,7 @@ class UserController extends AbstractController
      * @Route("/users/{id}/edit", name="user_edit")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $form = $this->createForm(UserType::class, $user);
 

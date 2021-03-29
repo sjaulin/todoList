@@ -13,7 +13,7 @@ class RegistrationControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
-    public function testRegistration()
+    public function testRegistration(): void
     {
         $client = static::createClient();
 

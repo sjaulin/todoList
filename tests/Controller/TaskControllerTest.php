@@ -15,7 +15,7 @@ class TaskControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
-    public function testCrudTask()
+    public function testCrudTask(): void
     {
         $client = static::createClient();
 
