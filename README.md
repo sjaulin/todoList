@@ -1,5 +1,9 @@
 # ToDoList v2
 
+## Configure BlackFire
+
+Set agent & client informations on docker-compose.env.example and rename file to docker-compose.env
+
 ## Run Docker containers
 
 ```

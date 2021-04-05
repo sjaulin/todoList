@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
+use Exception;
+use App\Service\TaskService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -12,6 +14,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
+/**
+ *
+ * @Route("/tasks")
+ *
+ * @IsGranted("ROLE_USER")
+ */
 class TaskController extends AbstractController
 {
 
@@ -27,7 +35,6 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks", name="task_list")
-     * @IsGranted("ROLE_USER")
      */
     public function listAction(): Response
     {
@@ -41,7 +48,6 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/done", name="task_list_done")
-     * @IsGranted("ROLE_USER")
      */
     public function listActionDone(): Response
     {
@@ -55,9 +61,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/create", name="task_create")
-     * @IsGranted("ROLE_USER")
      */
-    public function createAction(Request $request): Response
+    public function createAction(Request $request, TaskService $taskService): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -65,17 +70,8 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($this->getUser()) {
-                $task->setAuthor($this->getUser());
-            }
-
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($task);
-            $em->flush();
-
+            $taskService->save($this->getDoctrine()->getManager(), $task, $this->getUser());
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
-
             return $this->redirectToRoute('task_list');
         }
 
@@ -84,9 +80,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
-     * @IsGranted("ROLE_USER")
      */
-    public function editAction(Task $task, Request $request): Response
+    public function editAction(Task $task, Request $request, TaskService $taskService): Response
     {
 
         if (!$this->isGranted('ENTITY_EDIT', $task)) {
@@ -98,10 +93,8 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $taskService->save($this->getDoctrine()->getManager(), $task, null);
             $this->addFlash('success', 'La tâche a bien été modifiée.');
-
             return $this->redirectToRoute('task_list');
         }
 
@@ -113,7 +106,6 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
-     * @IsGranted("ROLE_USER")
      */
     public function toggleTaskAction(Task $task): Response
     {
@@ -135,7 +127,6 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
-     * @IsGranted("ROLE_USER")
      */
     public function deleteTaskAction(Task $task): Response
     {

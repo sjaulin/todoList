@@ -107,7 +107,7 @@ class TaskControllerTest extends WebTestCase
         $client->followRedirect();
     }
 
-    public function testAccessDenied()
+    public function testAccessDenied(): void
     {
         $client = static::createClient();
 
@@ -149,7 +149,7 @@ class TaskControllerTest extends WebTestCase
         $client->followRedirect();
     }
 
-    public function testAccessAdmin()
+    public function testAccessAdmin(): void
     {
 
         $client = static::createClient();
