@@ -75,7 +75,7 @@ class TaskControllerTest extends WebTestCase
         $client->request('GET', '/tasks/' . $task_id . '/toggle');
         $this->assertResponseRedirects();
         $client->followRedirect();
-        $this->assertStringContainsString('a bien été marquée comme faite', $client->getResponse()->getContent());
+        $this->assertStringContainsString('marquée comme terminée', $client->getResponse()->getContent());
         // Find Task
         self::bootkernel(); //pour éviter pb de cache ?
         $task = self::$container->get(TaskRepository::class)->find($task_id);
@@ -85,7 +85,7 @@ class TaskControllerTest extends WebTestCase
         $client->request('GET', '/tasks/' . $task_id . '/toggle');
         $this->assertResponseRedirects();
         $client->followRedirect();
-        $this->assertStringContainsString('a bien été marquée comme non faite', $client->getResponse()->getContent());
+        $this->assertStringContainsString('marquée comme à faire', $client->getResponse()->getContent());
         // Find Task
         self::bootkernel(); //pour éviter pb de cache ?
         $task = self::$container->get(TaskRepository::class)->find($task_id);

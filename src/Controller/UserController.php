@@ -11,11 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ * @Route("/users")
+ */
 class UserController extends AbstractController
 {
     /**
-     * @Route("/users", name="user_list")
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("", name="user_list")
      */
     public function listAction(): Response
     {
@@ -25,8 +28,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/create", name="user_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/create", name="user_create")
      */
     public function createAction(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -53,8 +55,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/{id}/edit", name="user_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/{id}/edit", name="user_edit")
      */
     public function editAction(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {

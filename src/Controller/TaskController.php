@@ -72,9 +72,7 @@ class TaskController extends AbstractController
     public function editAction(Task $task, Request $request, TaskService $taskService): Response
     {
 
-        if (!$this->isGranted('ENTITY_EDIT', $task)) {
-            throw new AccessDeniedHttpException("Vous ne pouvez pas modifier cette tâche");
-        }
+        $this->denyAccessUnlessGranted('ENTITY_EDIT', $task, "Vous ne pouvez pas modifier cette tâche");
 
         $form = $this->createForm(TaskType::class, $task);
 
@@ -97,17 +95,16 @@ class TaskController extends AbstractController
      */
     public function toggleTaskAction(Task $task): Response
     {
-        if (!$this->isGranted('ENTITY_EDIT', $task)) {
-            throw new AccessDeniedHttpException("Vous ne pouvez pas modifier cette tâche");
-        }
+
+        $this->denyAccessUnlessGranted('ENTITY_EDIT', $task, "Vous ne pouvez pas modifier cette tâche");
 
         $task->setIsDone(!$task->getIsDone());
         $this->getDoctrine()->getManager()->flush();
 
         if ($task->getIsDone()) {
-            $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+            $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme terminée.', $task->getTitle()));
         } else {
-            $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme non faite.', $task->getTitle()));
+            $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme à faire.', $task->getTitle()));
         }
 
         return $this->redirectToRoute('tasks', ['done' => (int) !$task->getIsDone()]);
@@ -119,9 +116,7 @@ class TaskController extends AbstractController
     public function deleteTaskAction(Task $task): Response
     {
 
-        if (!$this->isGranted('ENTITY_EDIT', $task)) {
-            throw new AccessDeniedHttpException("Vous ne pouvez pas modifier cette tâche");
-        }
+        $this->denyAccessUnlessGranted('ENTITY_DELETE', $task, "Vous ne pouvez pas supprimer cette tâche");
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
