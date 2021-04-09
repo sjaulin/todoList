@@ -3,97 +3,54 @@
 
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<title>To Do List app</title>
-
-		<!-- Bootstrap Core CSS -->
 		<link
-		href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+		rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
 		<!-- Custom CSS -->
-		<link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/custom.css') }}" rel="stylesheet"> {% block stylesheets %}{% endblock %}
 
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-										<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-										<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-									<![endif]-->
+		<script src="https://kit.fontawesome.com/c08a115d69.js" crossorigin="anonymous"></script>
+
+		<title>
+			{% block header_title %}{% endblock %}
+			| To Do List app
+		</title>
+
+
 	</head>
 
-	<body>
-		<nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="{{ path('homepage') }}">To Do List app</a>
-					<img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/>
-				</div>
+	<body class="{% block body_class %}{% endblock %}">
+
+		{% block head %}
+			<head>
+				{% include "_nav.html.twig" %}
+			</head>
+		{% endblock %}
+
+		{% for flash_message in app.session.flashBag.get('success') %}
+			<div class="alert alert-success" role="alert">
+				<strong>Superbe !</strong>
+				{{ flash_message }}
 			</div>
-		</nav>
+		{% endfor %}
 
-		<!-- Page Content -->
-		<div class="container">
-			<div class="row">
-				{% if is_granted('ROLE_ADMIN') %}
-					<a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
-				{% endif %}
-
-				{% if app.user %}
-					<a href="{{ path('app_logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-				{% endif %}
-
-				{% if not app.user and 'login' != app.request.attributes.get('_route') %}
-					<a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
-				{% endif %}
+		{% for flash_message in app.session.flashBag.get('error') %}
+			<div class="alert alert-danger" role="alert">
+				<strong>Oops !</strong>
+				{{ flash_message }}
 			</div>
+		{% endfor %}
 
-			<div class="row">
-				<div class="col-md-12">
-					{% for flash_message in app.session.flashBag.get('success') %}
-						<div class="alert alert-success" role="alert">
-							<strong>Superbe !</strong>
-							{{ flash_message }}
-						</div>
-					{% endfor %}
+		{% block content %}{% endblock %}
 
-					{% for flash_message in app.session.flashBag.get('error') %}
-						<div class="alert alert-danger" role="alert">
-							<strong>Oops !</strong>
-							{{ flash_message }}
-						</div>
-					{% endfor %}
+		{% block copyright %}
+			<p class="mt-5 mb-3 text-muted">Copyright &copy; OpenClassrooms</p>
+		{% endblock %}
 
-					{% block header_title %}{% endblock %}
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-				</div>
-			</div>
-
-			<br/>
-
-			<div class="row">
-				<div class="col-md-12"> {% block body %}{% endblock %}
-					</div>
-				</div>
-			</div>
-			<!-- /.container -->
-
-			<div class="container">
-
-				<hr>
-				<footer>
-					<div class="row">
-						<div class="col-lg-12">
-							<p class="pull-right">Copyright &copy; OpenClassrooms</p>
-						</div>
-					</div>
-				</footer>
-
-			</div>
-
-			<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-		</body>
-	</html>
+	</body>
+</html>

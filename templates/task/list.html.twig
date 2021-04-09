@@ -1,52 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">
-{% endblock %}
-
-{% block body %}
-	<a href="{{ path('task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
-	<div class="row">
-		{% for task in tasks %}
-			<div class="col-sm-4 col-lg-4 col-md-4">
-				<div class="thumbnail">
-					<div class="caption">
-						<h4 class="pull-right">
-							{% if task.isDone %}
-								<span class="glyphicon glyphicon-ok"></span>
-							{% else %}
-								<span class="glyphicon glyphicon-remove"></span>
-							{% endif %}
-						</h4>
-						<h4>
+{% block content %}
+	<div class="container">
+		<h1>Listes des tâches</h1>
+		<div class="row">
+			{% for task in tasks %}
+				<div class="col-sm-4 col-lg-4 col-md-4">
+					<div class="card p-3 m-3">
+						<div>
+							<h4 class="pull-right">
+								{% if task.isDone %}
+									<span class="glyphicon glyphicon-ok"></span>
+								{% else %}
+									<span class="glyphicon glyphicon-remove"></span>
+								{% endif %}
+							</h4>
+							<h4>
+								{% if is_granted('ENTITY_EDIT', task) %}
+									<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
+								{% else %}
+									<p>{{ task.title }}</p>
+								{% endif %}
+							</h4>
+							<p>{{ task.content }}</p>
+						</div>
+						<div>
 							{% if is_granted('ENTITY_EDIT', task) %}
-							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
-							{% else %}
-							<p>{{ task.title }}</p>
+								<form class="d-inline" action="{{ path('task_toggle', {'id' : task.id }) }}">
+									<button class="btn btn-success btn-sm pull-right">
+										{% if not task.isDone %}Terminée{% else %}Non terminée
+										{% endif %}
+									</button>
+								</form>
 							{% endif %}
-						</h4>
-						<p>{{ task.content }}</p>
-					</div>
-					<div>
-						{% if is_granted('ENTITY_EDIT', task) %}
-							<form action="{{ path('task_toggle', {'id' : task.id }) }}">
-								<button class="btn btn-success btn-sm pull-right">
-									{% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée
-									{% endif %}
-								</button>
-							</form>
-						{% endif %}
-						{% if is_granted('ENTITY_DELETE', task) %}
-							<form action="{{ path('task_delete', {'id' : task.id }) }}">
-								<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
-							</form>
-						{% endif %}
+							{% if is_granted('ENTITY_DELETE', task) %}
+								<form class="d-inline" action="{{ path('task_delete', {'id' : task.id }) }}">
+									<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+								</form>
+							{% endif %}
+						</div>
 					</div>
 				</div>
-			</div>
-		{% else %}
-			<div class="alert alert-warning" role="alert">
-				Il n'y a pas encore de tâche enregistrée.
-			</div>
-		{% endfor %}
+			{% else %}
+				<div class="alert alert-warning" role="alert">
+					Il n'y a pas encore de tâche enregistrée.
+				</div>
+			{% endfor %}
+		</div>
 	</div>
 {% endblock %}

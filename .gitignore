@@ -18,6 +18,7 @@
 /.vscode/
 /phpunit-report/
 docker-compose.env
+/node_modules/
 ###< sjaulin ###
 
 ###> squizlabs/php_codesniffer ###

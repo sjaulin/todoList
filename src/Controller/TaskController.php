@@ -34,10 +34,10 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @Route("/{done}", name="tasks")
-     * @param bool $done
+     * @Route("/list/{done}", name="tasks")
+     * @param int $done
      */
-    public function listAction($done = 0): Response
+    public function listAction(int $done): Response
     {
         return $this->render(
             'task/list.html.twig',
@@ -60,7 +60,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $taskService->save($this->getDoctrine()->getManager(), $task, $this->getUser());
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('tasks', ['done' => 0]);
         }
 
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
@@ -83,7 +83,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $taskService->save($this->getDoctrine()->getManager(), $task, null);
             $this->addFlash('success', 'La tâche a bien été modifiée.');
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('tasks', ['done' => (int) $task->getIsDone()]);
         }
 
         return $this->render('task/edit.html.twig', [
@@ -110,7 +110,7 @@ class TaskController extends AbstractController
             $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme non faite.', $task->getTitle()));
         }
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('tasks', ['done' => (int) !$task->getIsDone()]);
     }
 
     /**
@@ -129,6 +129,6 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('tasks', ['done' => (int) $task->getIsDone()]);
     }
 }

@@ -24,7 +24,7 @@ class UserControllerTest extends WebTestCase
         ]);
 
         // Login
-        $client->request('GET', '/login');
+        $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
         $client->submitForm('login', ['_username' => 'admin', '_password' => 'password']);
         $this->assertResponseRedirects();
@@ -87,7 +87,7 @@ class UserControllerTest extends WebTestCase
             UserFixtures::class
         ]);
 
-        $client->request('GET', '/login');
+        $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
         $client->submitForm('login', ['_username' => 'user1', '_password' => 'password']);
         $this->assertResponseRedirects();

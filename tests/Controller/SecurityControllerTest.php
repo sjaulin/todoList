@@ -22,7 +22,7 @@ class SecurityControllerTest extends WebTestCase
         ]);
 
         // Login
-        $client->request('GET', '/login');
+        $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
         $client->submitForm('login', ['_username' => 'user1', '_password' => 'password']);
         $this->assertResponseRedirects();
@@ -37,10 +37,10 @@ class SecurityControllerTest extends WebTestCase
         $client->followRedirect();
         $content = $client->getResponse()->getContent();
         $content = !empty($content) ? $content : '';
-        $this->assertStringContainsString('Se connecter', $content);
+        $this->assertStringContainsString('Please sign in', $content);
 
         // Invalid login
-        $client->request('GET', '/login');
+        $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
         $client->submitForm('login', ['_username' => 'baduser', '_password' => 'badpassword']);
         $this->assertResponseRedirects();

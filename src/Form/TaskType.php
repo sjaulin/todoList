@@ -17,7 +17,9 @@ class TaskType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('content');
+            ->add('content', null, [
+                'attr' => ['rows' => 10]
+            ]);
     }
 
     /**
