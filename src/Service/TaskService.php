@@ -3,19 +3,39 @@
 namespace App\Service;
 
 use App\Entity\Task;
-use App\Entity\User;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class TaskService
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
-    public function save(ObjectManager $em, Task $task, User $author = null): void
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage)
     {
-        if ($author) {
-            $task->setAuthor($author);
+        $this->em = $em;
+        $this->tokenStorage = $tokenStorage;
+    }
+
+    public function create(Task $task): void
+    {
+        if ($this->tokenStorage->getToken()->getUser()) {
+            $task->setAuthor($this->tokenStorage->getToken()->getUser());
         }
 
-        $em->persist($task);
-        $em->flush();
+        $this->em->persist($task);
+        $this->em->flush();
+    }
+
+    public function update(Task $task): void
+    {
+        $this->em->flush();
     }
 }

@@ -35,9 +35,9 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/list/{done}", name="tasks")
-     * @param int $done
+     * @param bool $done
      */
-    public function listAction(int $done): Response
+    public function listAction(bool $done): Response
     {
         return $this->render(
             'task/list.html.twig',
@@ -58,7 +58,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskService->save($this->getDoctrine()->getManager(), $task, $this->getUser());
+            $taskService->create($task);
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
             return $this->redirectToRoute('tasks', ['done' => 0]);
         }
@@ -79,7 +79,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskService->save($this->getDoctrine()->getManager(), $task, null);
+            $taskService->update($task);
             $this->addFlash('success', 'La tâche a bien été modifiée.');
             return $this->redirectToRoute('tasks', ['done' => (int) $task->getIsDone()]);
         }

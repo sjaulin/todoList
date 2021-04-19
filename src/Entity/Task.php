@@ -48,7 +48,7 @@ class Task
     private $isDone;
 
     /**
-     * @var User
+     * @var User|null
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
      */
     private $author;
@@ -57,6 +57,7 @@ class Task
     {
         $this->createdAt = new \Datetime();
         $this->isDone = false;
+        $this->author = null;
     }
 
     public function getId(): ?int
