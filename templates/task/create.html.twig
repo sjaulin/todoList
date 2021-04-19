@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	<div class="container">
+
+		<h1>Nouvelle tâche</h1>
+
+		{{ form_start(form, {'action' : path('task_create')}) }}
+		{{ form_widget(form) }}
+
+		<button type="submit" class="btn btn-success pull-right">Ajouter</button>
+		{{ form_end(form) }}
+
+	</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{# templates/security/login.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block header_title %}Sign in
+{% endblock %}
+
+{% block body_class %}text-center
+{% endblock %}
+
+{% block stylesheets %}<link href="{{ asset('css/pages/login.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block content %}
+
+	<form class="form-signin" action="{{ path('homepage') }}" method="post">
+
+
+		<h1><img class="" src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/>
+			Todolist</h1>
+
+		<p class="lead">Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !</p>
+
+		<h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
+
+		<label for="username" class="sr-only">Utilisateur</label>
+		<input type="text" id="username" name="_username" class="form-control" placeholder="Utilisateur" value="{{ last_username }}" required autofocus/>
+
+		<label for="inputPassword" class="sr-only">Mot de passe</label>
+		<input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required/>
+
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+
+		{% if error %}
+			<div class="m-2 alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
+
+		<p class="mt-5 mb-3 text-muted">Copyright &copy; OpenClassrooms</p>
+
+	</form>
+
+
+{% endblock %}
+
+{% block copyright %}{% endblock %}

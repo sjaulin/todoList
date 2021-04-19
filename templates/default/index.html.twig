@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}Accueil
+{% endblock %}
+
+{% block content %}
+
+	<div class="text-center">
+		<h1>
+			<i class="fas fa-tasks"></i>
+			Bienvenue sur Todo List</h1>
+
+		<p class="lead">L'application vous permettant de gérer l'ensemble de vos tâches sans effort !</p>
+
+		<div class="m-3">
+			<a href="{{ path('task_create') }}" class="btn btn-success">
+				<i class="fas fa-plus-circle"></i>
+				Créer une tâche</a>
+		</div>
+
+		<img class="slide-image rounded-pill" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-md navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
+
+	<div class="container">
+		<img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/>
+		<a class="navbar-brand" href="{{ path('homepage') }}">To Do List app</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav mr-auto">
+				{% if is_granted('ROLE_USER') %}
+					<li class="nav-link">
+						<a href="{{ path('tasks', {done: 0}) }}" class="btn btn-info">
+							<i class="fas fa-cog"></i>
+							Tâches à faire</a>
+					</li>
+					<li class="nav-link">
+						<a href="{{ path('tasks', {done: 1}) }}" class="btn btn-secondary">
+							<i class="far fa-check-circle"></i>
+							Tâches terminées</a>
+					</li>
+				{% endif %}
+
+			</ul>
+			<span class="navbar-text">
+				{% if is_granted('ROLE_ADMIN') %}
+					<a class="pr-3" href="{{ path('user_create') }}">
+						<i class="fas fa-user-plus"></i>
+						Ajouter un utilisateur</a>
+
+					<a class="pr-3" href="{{ path('user_list') }}">
+
+						<i class="fas fa-users"></i>
+						Liste des utilisateurs</a>
+				{% endif %}
+
+				{% if app.user %}
+					<a href="{{ path('app_logout') }}" class="pull-right btn btn-danger navbar-right">
+
+						<i class="far fa-window-close"></i>
+						Se déconnecter</a>
+				{% endif %}
+
+
+			</span>
+
+		</div>
+	</div>
+</nav>

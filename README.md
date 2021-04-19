@@ -1,6 +1,25 @@
-ToDoList
-========
+# ToDoList v2
 
-Base du projet #8 : Améliorez un projet existant
+## Configure BlackFire
 
-https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
+Set agent & client informations on docker-compose.env.example and rename file to docker-compose.env
+
+## Run Docker containers
+
+```
+docker-compose --env-file docker-compose.env up -d
+```
+
+## Run PHPUnit Test
+
+**With testdox + report :**
+
+```
+./vendor/bin/simple-phpunit --testdox --coverage-text
+```
+
+**With testdox + report + log:**
+
+```
+./vendor/bin/simple-phpunit --testdox --coverage-text > phpunit-report/log.txt
+```
