@@ -283,8 +283,7 @@ Workflow de contribution
 
 ```
 git fetch && git pull
-git git branch feature-1
-git checkout feature-1
+git checkout -b feature-1 dev
 ```
 
 ### Branche de la feature
