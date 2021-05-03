@@ -279,12 +279,12 @@ Pour lancer une analyse :
 Workflow de contribution
 ========================
 
+
 1- Créer une branche en local numérotée avec le numéro de l'issue correspondante.
 
 ```
-git fetch && git pull
-git git branch feature-1
-git checkout feature-1
+git fetch origin
+git checkout -b feature-1 dev
 ```
 
 ### Branche de la feature
