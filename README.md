@@ -1,25 +1,33 @@
 # ToDoList v2
 
-## Configure BlackFire
-
-Set agent & client informations on docker-compose.env.example and rename file to docker-compose.env
-
-## Run Docker containers
+## Run containers
 
 ```
 docker-compose --env-file docker-compose.env up -d
 ```
 
-## Run PHPUnit Test
+## Create database & Init data
 
-**With testdox + report :**
-
-```
-./vendor/bin/simple-phpunit --testdox --coverage-text
-```
-
-**With testdox + report + log:**
+Enter in Apache container :
 
 ```
-./vendor/bin/simple-phpunit --testdox --coverage-text > phpunit-report/log.txt
+docker exec -it todolist_www_1 /bin/bash
 ```
+
+**In container :**
+
+- create database & tables :
+
+```
+php ./bin/console doctrine:database:create
+php ./bin/console doctrine:migration:migrate -n
+```
+
+- Init. data 
+```
+php ./bin/console doctrine:fixtures:load -n
+```
+
+## Access to application
+
+Url : http://localhost:8080/

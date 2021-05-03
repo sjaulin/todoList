@@ -10,8 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TaskType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param FormBuilderInterface<string,FormBuilderInterface> $builder
+     * @param array<string,mixed> $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
