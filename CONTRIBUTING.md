@@ -225,11 +225,10 @@ Règles de qualité de code
 Intégration continue
 --------------------
 
-
 A chaque push ou merge sur la branche **dev**, le code est intégré au serveur d'intégration via **travis** qui éxecutera un scénario pour vérifier la qualité du code selon les règles configurées.
 Le scénario d'intégration est configuré dans le fichier [travis.yml](.travis.yml)
 
-Pour voir les builds : https://travis-ci.org/
+Pour voir les builds : https://www.travis-ci.com/
 
 Avant chaque commit, il est donc important de lancer ces mêmes commandes et vérifier qu'il n'y a pas d'erreur.
 

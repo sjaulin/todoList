@@ -27,7 +27,7 @@ class TaskControllerTest extends WebTestCase
         // Login
         $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
-        $client->submitForm('login', ['_username' => 'user1', '_password' => 'password']);
+        $client->submitForm('Se connecter', ['_username' => 'user1', '_password' => 'password']);
         $this->assertResponseRedirects();
         $client->followRedirect();
         $content = $client->getResponse()->getContent();
@@ -128,7 +128,7 @@ class TaskControllerTest extends WebTestCase
         // Login with another User
         $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
-        $client->submitForm('login', ['_username' => $differentUsername, '_password' => 'password']);
+        $client->submitForm('Se connecter', ['_username' => $differentUsername, '_password' => 'password']);
         $this->assertResponseRedirects();
         $client->followRedirect();
         $content = $client->getResponse()->getContent();
@@ -167,7 +167,7 @@ class TaskControllerTest extends WebTestCase
         // Login with Admin User
         $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
-        $client->submitForm('login', ['_username' => 'admin', '_password' => 'password']);
+        $client->submitForm('Se connecter', ['_username' => 'admin', '_password' => 'password']);
         $this->assertResponseRedirects();
         $client->followRedirect();
         $content = $client->getResponse()->getContent();

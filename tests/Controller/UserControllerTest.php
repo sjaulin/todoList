@@ -26,7 +26,7 @@ class UserControllerTest extends WebTestCase
         // Login
         $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
-        $client->submitForm('login', ['_username' => 'admin', '_password' => 'password']);
+        $client->submitForm('Se connecter', ['_username' => 'admin', '_password' => 'password']);
         $this->assertResponseRedirects();
         $client->followRedirect();
         $content = $client->getResponse()->getContent();
@@ -89,7 +89,7 @@ class UserControllerTest extends WebTestCase
 
         $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
-        $client->submitForm('login', ['_username' => 'user1', '_password' => 'password']);
+        $client->submitForm('Se connecter', ['_username' => 'user1', '_password' => 'password']);
         $this->assertResponseRedirects();
         $client->followRedirect();
 
