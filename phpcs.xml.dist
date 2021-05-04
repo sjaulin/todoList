@@ -10,7 +10,7 @@
 
     <rule ref="PSR12"/>
 
-    <file>public/</file>
+    <file>public/index.php</file>
     <file>src/</file>
     <file>tests/</file>
 

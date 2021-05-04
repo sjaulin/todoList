@@ -17,21 +17,23 @@ Cette documentation à pour objet :
     - [Configurer Xdebug](#configurer-xdebug)
   - [PHP](#php)
   - [Composer](#composer)
-  - [PHPCS](#phpcs)
   - [GIT](#git)
   - [Symfony CLI](#symfony-cli)
   - [Démarrer l'application](#démarrer-lapplication)
 - [Règles de qualité de code](#règles-de-qualité-de-code)
-  - [Intégration continue](#intégration-continue)
-  - [Tests unitaires et fonctionnels](#tests-unitaires-et-fonctionnels)
   - [PSR](#psr)
-  - [PHPCS](#phpcs-1)
-  - [PSPStan](#pspstan)
+  - [Outils de vérification](#outils-de-vérification)
+    - [PHPCS](#phpcs)
+    - [PSPStan](#pspstan)
+    - [Lint : Twig](#lint--twig)
+    - [Revue de code automatisée](#revue-de-code-automatisée)
+  - [Intégration continue](#intégration-continue)
+  - [Pre-commit](#pre-commit)
+  - [Tests unitaires et fonctionnels](#tests-unitaires-et-fonctionnels)
 - [Workflow de contribution](#workflow-de-contribution)
-    - [Branche de la feature](#branche-de-la-feature)
-    - [Commit message](#commit-message)
-    - [Merge request sur dev](#merge-request-sur-dev)
-      - [Intégration continue](#intégration-continue-1)
+    - [Travailler sur une fonctionnalité](#travailler-sur-une-fonctionnalité)
+    - [Publier la fonctionnalité / récupérer les modifications](#publier-la-fonctionnalité--récupérer-les-modifications)
+    - [Merger son code sur develop](#merger-son-code-sur-develop)
 
 Installation du poste de développeur
 ====================================
@@ -184,18 +186,6 @@ Ceci installe la dernière version de composer et l'ajoute le chemin dans la var
 Pour voir quelle version de composer est installé :
 ```composer -V```
 
-PHPCS
-------
-
-Installation de phpcs va composer :
-
-```composer global require squizlabs/php_codesniffer```
-
-Pour vérifier que phpcs est installé :
-
-```phpcs -i```
-
-
 GIT
 ----
 
@@ -222,15 +212,83 @@ Pour démarrer l'application en local via Docker, se référer au document [READ
 Règles de qualité de code
 ==========================
 
+PSR
+----
+La norme de codage que nous devons adopter est PSR12
+Voir les spécifications : https://www.php-fig.org/psr/psr-12/
+
+Outils de vérification
+----------------------
+
+### PHPCS
+
+PHP Code Sniffer est une commande qui permet de détecter dans le code des violations éventuelles des standards de programmation que nous avons définis (PSR12)
+
+Pour lancer une analyse :
+```./vendor/bin/phpcs```
+
+### PSPStan
+
+PHPStan est un outil d'analyse statique. Il détecte les problèmes de structure dans le code qui peuvent conduire à des bugs.
+Nous devons passer au moins le niveau 6 pour passer l'intégration continue.
+
+Pour lancer une analyse :
+```./vendor/bin/phpstan analyse src tests```
+
+### Lint : Twig
+
+Cette commande vérifie les erreurs de syntaxe dans es fichiers twig.
+
+Pour lancer une analyse : 
+
+```
+php bin/console lint:twig ./templates/
+```
+
+### Revue de code automatisée
+La revue de code automatisée permet de d'automatiser un certain nombre de vérifications liées à la sécurité et aux bonnes pratiques de programmation.
+Pour cela, nous utilisons Code Climate qui fera ses vérifications et attribuera une note qui sera mis à jour à chaque modification sur la branche main.
+
+https://codeclimate.com/github/sjaulin/todolist
+
+Il est important de veiller à rester sur une note de A ou B.
+
 Intégration continue
 --------------------
 
-A chaque push ou merge sur la branche **dev**, le code est intégré au serveur d'intégration via **travis** qui éxecutera un scénario pour vérifier la qualité du code selon les règles configurées.
+A chaque push ou merge sur la branche **develop**, le code est intégré au serveur d'intégration via **travis** qui éxecutera un scénario pour vérifier la qualité du code selon les règles configurées.
 Le scénario d'intégration est configuré dans le fichier [travis.yml](.travis.yml)
 
 Pour voir les builds : https://www.travis-ci.com/
 
-Avant chaque commit, il est donc important de lancer ces mêmes commandes et vérifier qu'il n'y a pas d'erreur.
+Avant chaque commit, il est donc important de lancer ces mêmes commandes et vérifier qu'il n'y a pas d'erreur, pour cela nous recommandons l'utilisation d'un fichier pre-commit
+
+Pre-commit
+----------
+
+Pour lancer les commandes de vérification de la qualité de code avant chaque commit, ajouter un fichier ```pre-commit``` dans le dossier ```.git\hooks``` du projet.
+Le conteneu du fichier :
+
+```sh
+#!/bin/sh
+
+echo "phpcs..."
+./vendor/bin/phpcs
+
+echo "phpstan..."
+./vendor/bin/phpstan analyse
+
+echo "lint:twig"
+php bin/console lint:twig ./templates/
+
+exit $?
+```
+
+Pour exécuter le fichier et lancer toutes les commandes sans avoir à faire un commit, lancez la commande :
+
+```
+bash .git/hooks/pre-commit
+```
 
 Tests unitaires et fonctionnels
 -------------------------------
@@ -238,9 +296,11 @@ Tests unitaires et fonctionnels
 Les tests PHPUNIT sont à écrire dans le dossier ./tests
 Il est important de s'assurer d'une couverture de test d'au moins 70%  (indicateur : Lines).
 
+Pour lancer les tests
+
 ```./vendor/bin/simple-phpunit --testdox --coverage-text```
 
-ou
+ou pour lancerles tests avec écriture d'un fichier de log (utilile en cas d'erreur)
 
 ```./vendor/bin/simple-phpunit --testdox --coverage-text > phpunit-report/log.txt```
 
@@ -256,42 +316,41 @@ Exemple : On veut exécuter le test testAccessDenied de la classe TaskController
 ./vendor/bin/simple-phpunit .\tests\Controller\TaskControllerTest.php --filter testAccessDenied 
 ```
 
-PSR
-----
-La norme de codage que nous devons adopter est PSR12
-Voir les spécifications : https://www.php-fig.org/psr/psr-12/
-
-PHPCS
------
-
-PHP Code Sniffer est une commande qui permet de détecter dans le code des violations éventuelles des standards de programmation que nous avons définis (PSR12)
-
-Pour lancer une analyse :
-```./vendor/bin/phpcs```
-
-PSPStan
--------
-PHPStan est un outil d'analyse statique. Il détecte les problèmes de structure dans le code qui peuvent conduire à des bugs.
-
-Pour lancer une analyse :
-```./vendor/bin/phpstan analyse src tests```
 
 Workflow de contribution
 ========================
 
+Pour notre workflow de contribution, nous utilisons en partie les commandes  git-flow.
+Pour initialisé git-flow :
+```git flow init```
 
-1- Créer une branche en local numérotée avec le numéro de l'issue correspondante.
+### Travailler sur une fonctionnalité
 
+1- Pour commencer une fonctionnalité :
+```git flow feature start feature/1```
+
+Cette commande crée une nouvelle branche de fonctionnalité basée sur 'develop' et passe sur cette branche
+
+2- Apporter vos modifications et faire le commit
 ```
-git fetch origin
-git checkout -b feature-1 dev
+git add monfichier.php
+git commit -m "feature/1 Bla bla bla"
 ```
 
-### Branche de la feature
-### Commit message
-Voir modèle Angular
+3- Terminer la fonctionnalité
+```git flow feature finish feature/1```
 
-### Merge request sur dev
+### Publier la fonctionnalité / récupérer les modifications
+Pour publier la fonctionnalité afin de la partager avec les autres développeurs :
+```git flow feature publish feature/1```
 
-#### Intégration continue
+Inversement, pour récupérer les éventuels modifications de la feature des autres développeurs :
+```git pull origin feature/1```
 
+### Merger son code sur develop
+
+Pour Merger les développements dans la branche develop, il est nécessaire de faire une pull request.
+
+Sur Github, sur la liste des branches, cliquez sur le bouton **New pull Request** en face de la branche de la feature en quiestion.
+
+Une fois le processus d'intégration continue et après validation du lead développeur, le code sera appliqué à la branche develop.

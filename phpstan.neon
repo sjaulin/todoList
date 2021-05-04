@@ -3,5 +3,6 @@ parameters:
     - vendor/bin/.phpunit/phpunit-8.5-0/vendor/autoload.php
   level: 6
   paths:
+  - public/index.php
   - src
   - tests
