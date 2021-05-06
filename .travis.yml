@@ -14,6 +14,7 @@ php:
   - "7.3.23"
 
 install:
+  - composer self-update
   - composer install --prefer-dist --no-interaction
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:migrations:migrate --no-interaction --env=test
