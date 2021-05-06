@@ -13,6 +13,9 @@ services:
 php:
   - "7.3.23"
 
+before_install:
+  - sudo apt-get install -y nodejs
+
 install:
   - composer self-update --2
   - composer install --prefer-dist --no-interaction
