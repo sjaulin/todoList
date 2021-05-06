@@ -1,0 +1,93 @@
+html {
+  &#login {
+    height: 100%;
+
+    body {
+      height: 100%;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: #fafbfc;
+
+      .picto_homepage {
+        width: 100%;
+      }
+
+      .form-signin {
+        width: 100%;
+        max-width: 430px;
+        padding: 15px;
+        margin: auto;
+        background: rgb(255, 255, 255);
+        border-radius: 3px;
+        box-shadow: lightgray 0px 0px 10px;
+      }
+
+      .form-signin .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+      }
+      .form-signin .form-control:focus {
+        z-index: 2;
+      }
+      .form-signin input[type="text"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  }
+
+  body {
+    nav {
+      margin-bottom: 1em;
+    }
+
+    .caption {
+      height: 130px;
+      overflow: hidden;
+    }
+
+    .caption h4 {
+      white-space: nowrap;
+    }
+
+    .thumbnail img {
+      width: 100%;
+    }
+
+    .ratings {
+      padding-right: 10px;
+      padding-left: 10px;
+      color: #d17581;
+    }
+
+    .thumbnail {
+      padding: 0;
+    }
+
+    .thumbnail .caption-full {
+      padding: 9px;
+      color: #333;
+    }
+
+    footer {
+      margin: 50px 0;
+    }
+
+    .slide-image {
+      opacity: 0.6;
+    }
+  }
+}
