@@ -1,4 +1,4 @@
-# ToDoList v2
+# ToDoList
 
 A light todolist tool.
 
