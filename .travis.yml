@@ -1,7 +1,4 @@
 language: php
-language: node_js
-node_js:
-  - "8.11.1"
 
 cache:
   directories:
@@ -16,6 +13,9 @@ services:
 php:
   - "7.3.23"
 
+before_install:
+  - npm install -g npm@4
+
 install:
   - composer self-update --2
   - composer install --prefer-dist --no-interaction
@@ -24,8 +24,6 @@ install:
   - php bin/console doctrine:fixtures:load -n --env=test
 
 before_script:
-  - npm install -g npm@4
-  - npm install
   - npm run build
 
 script:
