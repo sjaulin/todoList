@@ -17,6 +17,8 @@ Cette documentation à pour objet :
     - [Configurer Xdebug](#configurer-xdebug)
   - [PHP](#php)
   - [Composer](#composer)
+  - [NodeJS et NPM](#nodejs-et-npm)
+    - [Compiler les fichiers JS, SCSS](#compiler-les-fichiers-js-scss)
   - [GIT](#git)
   - [Symfony CLI](#symfony-cli)
   - [Démarrer l'application](#démarrer-lapplication)
@@ -30,6 +32,7 @@ Cette documentation à pour objet :
   - [Intégration continue](#intégration-continue)
   - [Pre-commit](#pre-commit)
   - [Tests unitaires et fonctionnels](#tests-unitaires-et-fonctionnels)
+  - [Tests de performances](#tests-de-performances)
 - [Workflow de contribution](#workflow-de-contribution)
     - [Travailler sur une fonctionnalité](#travailler-sur-une-fonctionnalité)
     - [Publier la fonctionnalité / récupérer les modifications](#publier-la-fonctionnalité--récupérer-les-modifications)
@@ -186,6 +189,25 @@ Ceci installe la dernière version de composer et l'ajoute le chemin dans la var
 Pour voir quelle version de composer est installé :
 ```composer -V```
 
+NodeJS et NPM
+--------------
+
+Pour développer des applications modernes en javascript (notamment pour compiler et optimiser notre code), on utilise un environnement de développement nécessitant NodeJS et NPM, vous pouvez l'installer à partir d'ici : https://nodejs.org/en/
+
+**Ceci install**
+
+- Le Runtime
+- Le gestionnaire de paquet npm
+- Un lien vers la doc
+- Ajout du PATH windows
+
+### Compiler les fichiers JS, SCSS
+
+Pour compiler les fichiers
+```
+npm run-script build
+```
+
 GIT
 ----
 
@@ -316,6 +338,23 @@ Exemple : On veut exécuter le test testAccessDenied de la classe TaskController
 ./vendor/bin/simple-phpunit .\tests\Controller\TaskControllerTest.php --filter testAccessDenied 
 ```
 
+Tests de performances
+----------------------
+
+L'outil d'analyse de performance [Blackfire.io](https://blackfire.io/) est installé sur l'environnement de développement.
+Pour lancer une analyse, lancer la commande suivante :
+
+Pour analyser la page d'accueil :
+```
+docker-compose exec blackfire blackfire curl http://www
+```
+
+Pour analyser la liste des tâche à faire :
+```
+docker-compose exec blackfire blackfire curl http://www/tasks/list/0
+```
+
+Une fois l'analyse effectuée, un lien s'affiche dans la console qui permet d'accéder aux résulktats de l'analyse.
 
 Workflow de contribution
 ========================

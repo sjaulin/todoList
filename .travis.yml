@@ -13,9 +13,6 @@ services:
 php:
   - "7.3.23"
 
-before_install:
-  - sudo apt-get install -y nodejs
-
 install:
   - composer self-update --2
   - composer install --prefer-dist --no-interaction
@@ -25,6 +22,7 @@ install:
   - php bin/console doctrine:fixtures:load -n --env=test
 
 script:
+  - npm run-script build
   - ./vendor/bin/simple-phpunit --coverage-text --testdox-text phpunit-report/testdox
   - php phpunit-coverage-checker.php phpunit-report/coverage/clover.xml 70
   - ./vendor/bin/phpcs
