@@ -13,8 +13,11 @@ services:
 php:
   - "7.3.23"
 
+before_install:
+  - nvm install node
+  - npm install node-sass --nodedir=/usr/local
+
 install:
-  - npm install
   - composer self-update --2
   - composer install --prefer-dist --no-interaction
   - php bin/console doctrine:database:create --env=test
