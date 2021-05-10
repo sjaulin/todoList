@@ -96,9 +96,6 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
-    "egulias/email-validator": {
-        "version": "3.1.0"
-    },
     "fakerphp/faker": {
         "version": "v1.13.0"
     },
@@ -299,15 +296,6 @@
             "./src/Kernel.php"
         ]
     },
-    "symfony/google-mailer": {
-        "version": "4.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.4",
-            "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
-        }
-    },
     "symfony/http-client": {
         "version": "v5.2.4"
     },
@@ -322,18 +310,6 @@
     },
     "symfony/intl": {
         "version": "v5.2.4"
-    },
-    "symfony/mailer": {
-        "version": "4.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.3",
-            "ref": "15658c2a0176cda2e7dba66276a2030b52bd81b2"
-        },
-        "files": [
-            "./config/packages/mailer.yaml"
-        ]
     },
     "symfony/maker-bundle": {
         "version": "1.0",
@@ -363,18 +339,6 @@
             "./config/packages/prod/deprecations.yaml",
             "./config/packages/prod/monolog.yaml",
             "./config/packages/test/monolog.yaml"
-        ]
-    },
-    "symfony/notifier": {
-        "version": "5.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.0",
-            "ref": "c31585e252b32fe0e1f30b1f256af553f4a06eb9"
-        },
-        "files": [
-            "./config/packages/notifier.yaml"
         ]
     },
     "symfony/options-resolver": {
@@ -461,16 +425,16 @@
         ]
     },
     "symfony/security-core": {
-        "version": "v5.2.5"
+        "version": "v5.2.7"
     },
     "symfony/security-csrf": {
-        "version": "v5.2.4"
+        "version": "v5.1.11"
     },
     "symfony/security-guard": {
-        "version": "v5.2.4"
+        "version": "v5.1.11"
     },
     "symfony/security-http": {
-        "version": "v5.2.5"
+        "version": "v5.2.7"
     },
     "symfony/serializer": {
         "version": "v5.2.4"
