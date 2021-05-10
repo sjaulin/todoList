@@ -13,8 +13,9 @@ services:
 php:
   - "7.3.23"
 
-before_install:
-  - nvm install node
+before_script:
+  - npm install -g grunt-cli
+  - npm install
 
 install:
   - npm install
@@ -23,9 +24,6 @@ install:
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:migrations:migrate --no-interaction --env=test
   - php bin/console doctrine:fixtures:load --no-interaction --env=test
-
-before_script:
-  - npm run build
 
 script:
   - ./vendor/bin/simple-phpunit --coverage-text --testdox-text phpunit-report/testdox
