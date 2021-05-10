@@ -22,7 +22,7 @@ before_install:
   - nvm install node
   - node -v
   - npm -v
-  - npm install node-sass@latest
+  - npm install
 
 install:
   - composer self-update --2
