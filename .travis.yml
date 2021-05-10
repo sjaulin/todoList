@@ -14,8 +14,13 @@ php:
   - "7.3.23"
 
 before_install:
-  - nvm install node
-  - npm install node-sass --nodedir=/usr/local
+  - node -v
+  - npm -v
+  - node -p process.versions
+  - node -p process.platform
+  - node -p process.arch
+  - npm cache clean
+  - npm install node-sass@latest
 
 install:
   - composer self-update --2
