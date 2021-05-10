@@ -13,10 +13,6 @@ services:
 php:
   - "7.3.23"
 
-before_script:
-  - npm install -g grunt-cli
-  - npm install
-
 install:
   - npm install
   - composer self-update --2
