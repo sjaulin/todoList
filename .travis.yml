@@ -19,7 +19,6 @@ before_install:
   - node -p process.versions
   - node -p process.platform
   - node -p process.arch
-  - npm cache clean
   - npm install node-sass@latest
 
 install:
