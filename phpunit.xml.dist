@@ -29,9 +29,9 @@
     </filter>
     <logging>
         <!-- and this is where your report will be written -->
-        <log type="coverage-clover" target="./phpunit-report/coverage/clover.xml"/>
-        <log type="coverage-html" target="./phpunit-report/coverage/html"/>
-        <log type="testdox-text" target="./phpunit-report/testdox.txt"/>
+        <log type="coverage-clover" target="./public/phpunit-report/coverage/clover.xml"/>
+        <log type="coverage-html" target="./public/phpunit-report/coverage/html"/>
+        <log type="testdox-text" target="./public/phpunit-report/testdox.txt"/>
     </logging>
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />

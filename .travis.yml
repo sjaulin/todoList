@@ -35,8 +35,8 @@ before_script:
   - npm run build
 
 script:
-  - ./vendor/bin/simple-phpunit --coverage-text --testdox-text phpunit-report/testdox
-  - php phpunit-coverage-checker.php phpunit-report/coverage/clover.xml 70
+  - ./vendor/bin/simple-phpunit --coverage-text --testdox-text public/phpunit-report/testdox
+  - php phpunit-coverage-checker.php public/phpunit-report/coverage/clover.xml 70
   - ./vendor/bin/phpcs
   - ./vendor/bin/phpstan analyse src tests
   - php bin/console lint:twig ./templates/

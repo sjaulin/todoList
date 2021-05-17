@@ -16,7 +16,7 @@
 
 ###> sjaulin ###
 /.vscode/
-/phpunit-report/
+/public/phpunit-report/
 docker-compose.env
 /node_modules/
 ###< sjaulin ###

@@ -1,0 +1,24 @@
+@startuml
+title Cas d'utilisation
+left to right direction
+actor "Admin" as admin
+actor "Utilisateur" as user
+rectangle TodoAndCo {
+  usecase "Ajouter un utilisateur" as UC1
+  usecase "Supprimer un utilisateur" as UC2
+  usecase "Modifier un utilisateur" as UC3
+
+  usecase "Créer une tâche" as UC11
+  usecase "Supprimer une tâche" as UC12
+  usecase "Traiter une tache" as UC13
+  usecase "Annuler le traitement d'une tache" as UC14
+}
+admin --> UC1
+admin --> UC2
+admin --> UC3
+
+user --> UC11
+user --> UC12
+user --> UC13
+user --> UC14
+@enduml

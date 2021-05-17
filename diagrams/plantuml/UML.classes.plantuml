@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+title Classes
+
+class User {
+  username
+  password
+  roles
+}
+
+class Task {
+    title
+    content
+    author
+    isDone
+    createdAt
+}
+
+User "1" --- "0..*" Task
+
+@enduml
