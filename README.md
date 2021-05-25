@@ -52,3 +52,6 @@ php ./bin/console doctrine:fixtures:load -n
 ## Access to application
 
 Url : http://localhost:8080/
+
+Login on admin user : admin / password
+Login on simple user : user1 / password
